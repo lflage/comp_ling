@@ -5,11 +5,11 @@ This repository contains files related to Assignment 4 from the Computational Li
 
 # Dependencies
 
-Python             3.7.4
-pytorch            1.10.1  cuda 10.2
-torchtext          0.11.1
-comet_ml           3.2.0
-
+Python             3.7.4  
+pytorch            1.10.1  cuda 10.2  
+torchtext          0.11.1  
+comet_ml           3.2.0  
+  
 
 # Tree Structure
 
