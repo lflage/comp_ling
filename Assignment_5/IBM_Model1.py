@@ -2,7 +2,7 @@ from tqdm import tqdm
 import json
 
 # Number of sentences to be used
-n_sents = 1000
+n_sents = 100000
 # Number of iterations to be done
 iter_n = 5
 # Path to sabe probabilities dictionaty
@@ -22,12 +22,13 @@ with open('./hw2/data/hansards.e','r') as file:
 p_f_e = {}
 zero_dict = {}
 
-for n_f, n_e, in zip(f_sentences, e_sentences):
+print('Initializing Dicts')
+for n_f, n_e, in tqdm(zip(f_sentences, e_sentences)):
     for i in n_f.split():
-        p_f_e[i+'#'+'NULL'] = 1/n_sents
-        zero_dict[i+'#'+'NULL'] = 1/n_sents
+        p_f_e[i+'ß'+'NULL'] = 1/n_sents
+        zero_dict[i+'ß'+'NULL'] = 1/n_sents
         for j in n_e.split():
-            key = i+'#'+j
+            key = i+'ß'+j
             p_f_e[key] = 1/n_sents
             zero_dict[key] = 0
 
@@ -48,11 +49,11 @@ for step in tqdm(range(iter_n)):
             e = e_sentences[n].split()
             e.insert(0,'NULL')
             for j in e:
-                Z[i] = Z[i] + p_f_e[i+'#'+j]
+                Z[i] = Z[i] + p_f_e[i+'ß'+j]
             for j in e:
                 # Expected counts
-                c = p_f_e[i+'#'+j]/Z[i]
-                counts[i+'#'+j] += c
+                c = p_f_e[i+'ß'+j]/Z[i]
+                counts[i+'ß'+j] += c
            
                 if j in word_marg_count:
                     word_marg_count[j] += c
@@ -62,8 +63,7 @@ for step in tqdm(range(iter_n)):
         # M-Step: Normalize
     for key in p_f_e:
     	# The marginal count
-        v = word_marg_count[key.split('#')[1]]
-        p_f_e[key] = counts[key]/v
+        p_f_e[key] = counts[key]/word_marg_count[key.split('ß')[1]]
 
 
 with open(path_to_dict,'w') as file:
