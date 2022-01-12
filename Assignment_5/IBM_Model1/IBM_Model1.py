@@ -11,19 +11,15 @@ parser.add_argument('iter_n', type=int, help=
 parser.add_argument('--path_to_dict', type=str, help=
         'Path to store probabilities dict. Defaults to ./p_f_e.dict ',
         default='./p_f_e.dict')
-parser.add_argument('--f_path', default='./hw2/data/hansards.f',
+parser.add_argument('--f_path', default='./data/hansards.f',
         help='Optional path for the foreign corpus')
-parser.add_argument('--e_path', default='./hw2/data/hansards.e',
+parser.add_argument('--e_path', default='./data/hansards.e',
         help='Optional path for the source')
 
 args = parser.parse_args()
 
 # Number of sentences to be used
-<<<<<<< HEAD:Assignment_5/IBM_Model1/IBM_Model1.py
 n_sents = args.n_sents
-=======
-n_sents = 1000
->>>>>>> parent of 515419d (added new french-english separator, uploaded aligner with AER .93):Assignment_5/IBM_Model1.py
 # Number of iterations to be done
 iter_n = args.iter_n
 # Path to sabe probabilities dictionaty
@@ -50,10 +46,10 @@ zero_dict = {}
 
 for n_f, n_e, in zip(f_sentences, e_sentences):
     for i in n_f.split():
-        p_f_e[i+'#'+'NULL'] = 1/n_sents
-        zero_dict[i+'#'+'NULL'] = 1/n_sents
+        p_f_e[i+'ß'+'NULL'] = 1/n_sents
+        zero_dict[i+'ß'+'NULL'] = 1/n_sents
         for j in n_e.split():
-            key = i+'#'+j
+            key = i+'ß'+j
             p_f_e[key] = 1/n_sents
             zero_dict[key] = 0
 
@@ -74,11 +70,11 @@ for step in tqdm(range(iter_n)):
             e = e_sentences[n].split()
             e.insert(0,'NULL')
             for j in e:
-                Z[i] = Z[i] + p_f_e[i+'#'+j]
+                Z[i] = Z[i] + p_f_e[i+'ß'+j]
             for j in e:
                 # Expected counts
-                c = p_f_e[i+'#'+j]/Z[i]
-                counts[i+'#'+j] += c
+                c = p_f_e[i+'ß'+j]/Z[i]
+                counts[i+'ß'+j] += c
            
                 if j in word_marg_count:
                     word_marg_count[j] += c
@@ -88,7 +84,7 @@ for step in tqdm(range(iter_n)):
         # M-Step: Normalize
     for key in p_f_e:
     	# The marginal count
-        v = word_marg_count[key.split('#')[1]]
+        v = word_marg_count[key.split('ß')[1]]
         p_f_e[key] = counts[key]/v
 
 
