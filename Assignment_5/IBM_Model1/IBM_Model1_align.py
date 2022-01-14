@@ -5,13 +5,13 @@ from tqdm import tqdm
 
 parser = argparse.ArgumentParser(description='Process inputs.')
 
-parser.add_argument('n_sents', type=int, help=
+parser.add_argument('--n_sents', type=int, default=100000, help=
         'Number of sentences to be read from the Hansards Corpus')
 parser.add_argument('--path_to_model', default='./p_f_e.dict', type=str,
         help='Optional path to pre trained probabilities model')
-parser.add_argument('--f_path', default='.data/hansards.f',type=str,
+parser.add_argument('--f_path', default='../data/hansards.f',type=str,
         help='Optional path for the foreign corpus')
-parser.add_argument('--e_path', default='.data/hansards.e',type=str,
+parser.add_argument('--e_path', default='../data/hansards.e',type=str,
         help='Optional path for the source corpus')
 parser.add_argument('--a_path', default='./model1.a',type=str,
         help='Optional path for the alignemnts file')
@@ -42,7 +42,8 @@ with open (e_path, 'r') as file:
 
 aligns = []
 
-for n_f, n_e in zip(f_sentences, e_sentences):
+print('Searching for best alignments')
+for n_f, n_e in tqdm(zip(f_sentences, e_sentences)):
 
     align = []
     f = n_f.split()
@@ -51,7 +52,7 @@ for n_f, n_e in zip(f_sentences, e_sentences):
         best_j = 0
         
         e = n_e.split()
-        e.insert(0,'NULL')
+        
         for e_word in e:
             key = f_word+'ß'+ e_word
             current_prob = p_f_e[key]
@@ -59,15 +60,15 @@ for n_f, n_e in zip(f_sentences, e_sentences):
                 best_prob = current_prob
                 best_j = e.index(e_word)
             
-        align.append(str(f.index(f_word))+str(best_j))
+        align.append((str(f.index(f_word)),str(best_j)))
     aligns.append(align)
 
 with open(a_path,'w') as file:
     print('Writing alignments to file')
     for sentence in aligns:
         for align in sentence:
-             file.write('-'.join(align))
-             file.write(' ')
+            file.write(align[0]+'-'+align[1])
+            file.write(' ')
         file.write('\n')
 
 
