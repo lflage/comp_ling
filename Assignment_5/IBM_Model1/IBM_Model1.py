@@ -4,16 +4,15 @@ import argparse
 
 parser = argparse.ArgumentParser(description='Process inputs.')
 
-parser.add_argument('n_sents', type=int, help=
+parser.add_argument('--n_sents', type=int, default=100000, help=
         'Number of sentences to be used from the Hansards Corpus' )
 parser.add_argument('iter_n', type=int, help=
         'Number of iterations for Expectation Maximization')
-parser.add_argument('--path_to_dict', type=str, help=
-        'Path to store probabilities dict. Defaults to ./p_f_e.dict ',
-        default='./p_f_e.dict')
-parser.add_argument('--f_path', default='./data/hansards.f',
+parser.add_argument('--path_to_dict', type=str, default='./p_f_e.dict',
+        help= 'Path to store probabilities dict. Defaults to ./p_f_e.dict')
+parser.add_argument('--f_path', type=str, default='../data/hansards.f',
         help='Optional path for the foreign corpus')
-parser.add_argument('--e_path', default='./data/hansards.e',
+parser.add_argument('--e_path', type=str,default='../data/hansards.e',
         help='Optional path for the source')
 
 args = parser.parse_args()
@@ -43,15 +42,28 @@ with open(e_path,'r') as file:
 
 p_f_e = {}
 zero_dict = {}
+e_vocab = set()
+for sent in e_sentences:
+    e_vocab.update(sent.split())
 
-for n_f, n_e, in zip(f_sentences, e_sentences):
+e_vocab_len = len(e_vocab)
+
+print('Creating Dicts')
+for n_f, n_e, in tqdm(zip(f_sentences, e_sentences)):
     for i in n_f.split():
-        p_f_e[i+'ß'+'NULL'] = 1/n_sents
-        zero_dict[i+'ß'+'NULL'] = 1/n_sents
+        p_f_e[i+'ß'+'NULL'] = 1/e_vocab_len
+        zero_dict[i+'ß'+'NULL'] = 0
         for j in n_e.split():
             key = i+'ß'+j
-            p_f_e[key] = 1/n_sents
+            p_f_e[key] = 1/e_vocab_len
             zero_dict[key] = 0
+test = 15
+i=0
+for key in p_f_e:
+    print(p_f_e[key])
+    i+=1
+    if i == test:
+        break
 
 # We repeeat this process iter_n times to get the best probabilites
 for step in tqdm(range(iter_n)):
@@ -75,7 +87,7 @@ for step in tqdm(range(iter_n)):
                 # Expected counts
                 c = p_f_e[i+'ß'+j]/Z[i]
                 counts[i+'ß'+j] += c
-           
+                # 
                 if j in word_marg_count:
                     word_marg_count[j] += c
                 else:
@@ -84,8 +96,7 @@ for step in tqdm(range(iter_n)):
         # M-Step: Normalize
     for key in p_f_e:
     	# The marginal count
-        v = word_marg_count[key.split('ß')[1]]
-        p_f_e[key] = counts[key]/v
+        p_f_e[key] = counts[key]/word_marg_count[key.split('ß')[1]]
 
 
 with open(path_to_dict,'w') as file:
