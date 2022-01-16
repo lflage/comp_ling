@@ -3,15 +3,17 @@ import json
 import argparse
 from tqdm import tqdm
 
-parser = argparse.ArgumentParser(description='Process inputs.')
+parser = argparse.ArgumentParser(description='Creates alignments target-source
+        for a corpus of sentence pairs files. This file must receive the
+        probabilites dict as input')
 
 parser.add_argument('--n_sents', type=int, default=100000, help=
         'Number of sentences to be read from the Hansards Corpus')
 parser.add_argument('--path_to_model', default='./p_f_e.dict', type=str,
         help='Optional path to pre trained probabilities model')
-parser.add_argument('--f_path', default='../data/hansards.f',type=str,
+parser.add_argument('--f_path', default='../hw2/data/hansards.f',type=str,
         help='Optional path for the foreign corpus')
-parser.add_argument('--e_path', default='../data/hansards.e',type=str,
+parser.add_argument('--e_path', default='../hw2/data/hansards.e',type=str,
         help='Optional path for the source corpus')
 parser.add_argument('--a_path', default='./model1.a',type=str,
         help='Optional path for the alignemnts file')
@@ -40,29 +42,31 @@ with open (f_path, 'r') as file:
 with open (e_path, 'r') as file:
     e_sentences = file.readlines()[:n_sents]
 
+# list with alignments for all sentence pairs
 aligns = []
-
 print('Searching for best alignments')
 for n_f, n_e in tqdm(zip(f_sentences, e_sentences)):
-
+    # current alignment i-j
     align = []
     f = n_f.split()
+    # Iterating over the word in the target language sentence
     for f_word in f:
         best_prob = 0
         best_j = 0
         
         e = n_e.split()
-        
+        # iterating over the words in the source language sentence
         for e_word in e:
             key = f_word+'ß'+ e_word
             current_prob = p_f_e[key]
             if current_prob > best_prob:
                 best_prob = current_prob
                 best_j = e.index(e_word)
-            
+        
         align.append((str(f.index(f_word)),str(best_j)))
     aligns.append(align)
 
+# Writing the alignments to a file
 with open(a_path,'w') as file:
     print('Writing alignments to file')
     for sentence in aligns:
