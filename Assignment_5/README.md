@@ -18,7 +18,7 @@ python		3.9.7
 tqdm		4.62.3
 
 ## Tree Structure
-
+```
 .
 ├── fast_align
 │   └── fast_paralelize.py
@@ -38,7 +38,7 @@ tqdm		4.62.3
 ├── get_report.sh
 ├── README.md
 └── results.txt
-
+```
 ## How to Run
 
 The probabilities table for French given English was created with 5 iterations of the Expectation Maximization Algorithm.
