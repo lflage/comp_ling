@@ -1,8 +1,7 @@
 import argparse
 import re
 
-parser = argparse.ArgumentParser(description='Creates a file that can be used
-        as input for the fast aligner.')
+parser = argparse.ArgumentParser(description='Creates a file that can be used as input for the fast aligner.')
 
 parser.add_argument('--f_path', type=str, default='../hw2/data/hansards.f',
         help='Optional path for foreign sentences')
