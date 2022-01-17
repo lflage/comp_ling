@@ -3,9 +3,7 @@ import json
 import argparse
 from tqdm import tqdm
 
-parser = argparse.ArgumentParser(description='Creates alignments target-source
-        for a corpus of sentence pairs files. This file must receive the
-        probabilites dict as input')
+parser = argparse.ArgumentParser(description='Creates alignments target-source for a corpus of sentence pairs files. This file must receive the probabilites dict as input')
 
 parser.add_argument('--n_sents', type=int, default=100000, help=
         'Number of sentences to be read from the Hansards Corpus')
