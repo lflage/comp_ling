@@ -2,9 +2,7 @@ from tqdm import tqdm
 import json
 import argparse
 
-parser = argparse.ArgumentParser(description='Creates a dictionary maping the
-        probability of a word on the target corpus occuring given a word on 
-        the source corpus using expectation maximization')
+parser = argparse.ArgumentParser(description='Creates a dictionary maping the probability of a word on the target corpus occuring given a word on the source corpus using expectation maximization')
 
 parser.add_argument('iter_n', type=int, help=
         'Number of iterations for Expectation Maximization')
