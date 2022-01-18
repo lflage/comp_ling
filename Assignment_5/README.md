@@ -12,8 +12,8 @@ The probabilities of french given english are stored as a dict. They are saved a
 
 ## Dependencies
 
-python		3.9.7
-tqdm		4.62.3
+python		3.9.7  
+tqdm		4.62.3  
 
 ## Tree Structure
 ```
