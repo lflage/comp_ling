@@ -4,11 +4,9 @@
 
 This code was generated mainly using CLI. There are discriptive instructions bellow but you can also check the ```-h```.
 
-If you want to simply run the bash script to generate the ```Report.txt``` file,
-the files provided here must be in the same folder as the hw2 folder provided on
-the original MT Homework.
+To run these files correctly this folders must be on the same folder as the ```hw2``` folder of the original MTClass repository. The hw2 folder is in the zip file 
 
-Otherwise you can simply run every command from the CLI.
+A report is provided, but to obtain it give the bash script ```get_report.sh``` the write and run permission.
 
 The probabilities of french given english are stored as a dict. They are saved as file and amount to a size of 247M.
 
@@ -55,7 +53,7 @@ The probabilities table for French given English was created with 5 iterations o
 * On the same folder run the fast aligner with the following arguments to generate the fast.a file containing its alignments:
 ```fast_align -i fast_paralelized -d -o -v -r > fast.a```
 
-* Run the ```get_report.sh``` to create the ```Report.txt``` file containing the scores and the alignment comparisons.
+* Optional: Run the ```get_report.sh``` to create the ```Report.txt``` file containing the scores and the alignment comparisons. To do this give the file write and run permissions befor running it: ```chmod 777 get_report.sh```
 
 
 ## Runtimes
