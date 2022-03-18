@@ -13,7 +13,7 @@ parser.add_argument('-nIter', type=int, default=500,
 args = parser.parse_args()
 
 with open(args.path+'.out', 'wb') as file:
-    lda = LDA(args.path,Ntopic=args.nIter)
+    lda = LDA(args.path,Ntopic=args.nTopics)
     lda.readCorpus()
     lda.initMatrices()
     lda.runIter(args.nIter)
