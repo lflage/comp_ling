@@ -10,7 +10,7 @@ parser.add_argument('-path', type=str,
 parser.add_argument('-nIter', type=int, default=500,
         help='Number of GibbsSampling iterations')
 parser.add_argument('-outPath',type=str, default='./lda',
-	help='Path to output serialized pickle file')
+        help='Path to output serialized pickle file')
 
 args = parser.parse_args()
 
