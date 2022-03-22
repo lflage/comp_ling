@@ -2,12 +2,13 @@
 
 This repository was created to contain code relevant to the final project in the Computational Linguistics programm WiSe 21/22 at the Universiät des Saarlandes
 
-# Dependencies
-python                    3.9.7
-lxml                      4.6.3 
+# Dependencies  
+
+python                    3.9.7  
+lxml                      4.6.3   
 pandas                    1.3.4  
-numpy                     1.20.3
-tqdm                      4.62.3
+numpy                     1.20.3  
+tqdm                      4.62.3  
 
 # Tree Structure
 ```
