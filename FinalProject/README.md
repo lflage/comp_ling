@@ -10,7 +10,7 @@ numpy                     1.20.3
 tqdm                      4.62.3
 
 # Tree Structure
-
+```
 .
 ├── corpus_man.py
 ├── Diachronic_LDA.ipynb
@@ -19,7 +19,7 @@ tqdm                      4.62.3
 ├── my_lda.py
 ├── periodos_tycho.csv
 └── README.md
-
+```
 
 # How to Run
 
